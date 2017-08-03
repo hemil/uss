@@ -13,7 +13,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # assuming traffic not as high as
-        print "in command"
         old_key = kwargs.get("old_key")
         if not old_key:
             return None
