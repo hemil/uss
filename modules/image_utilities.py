@@ -19,9 +19,10 @@ def save_image(api_key, image_file):
     """
     folder_path = settings.FILE_DIR + "/" + api_key
     file_path = folder_path + "/" + image_file.name.replace(" ", "_")
+    file_extension = image_file.name.split(".")[-1]
 
-    if image_file.name.split(".")[-1] not in ["jpeg", "jpg", "png"]:
-        raise ParseError("Only jpg, jpeg and png formats allowed.")
+    if file_extension not in ["jpeg", "jpg", "png", "gif"]:
+        raise ParseError("Only jpg, jpeg, gif and png formats allowed.")
 
     # Create folder if it doesn't exist and handle the race condition where the folder is created in between checking
     # it exists and creating it
@@ -31,20 +32,21 @@ def save_image(api_key, image_file):
         if e.errno != errno.EEXIST:
             raise
 
-    # PIL compression only for jpeg and ong
-    # makes it slow
-    # possibly: save it normally and then shoot an event which will asynchronously compress it/upload it to cloud
-    buff = StringIO()
-    buff.write(image_file.read())
-    buff.seek(0)
-    pil_image = Image.open(buff)
-    pil_image.save(file_path, optimize=True, quality=95)
-
-    # direct save for other formats
-    # file_content = ContentFile(image_file.read())
-    # with open(file_path, "wb+") as f:
-    #     for chunk in file_content.chunks():
-    #         f.write(chunk)
+    if file_extension in ["gif"]:
+        # direct save for other formats
+        file_content = ContentFile(image_file.read())
+        with open(file_path, "wb+") as f:
+            for chunk in file_content.chunks():
+                f.write(chunk)
+    else:
+        # PIL compression only for jpeg and ong
+        # makes it slow
+        # possibly: save it normally and then shoot an event which will asynchronously compress it/upload it to cloud
+        buff = StringIO()
+        buff.write(image_file.read())
+        buff.seek(0)
+        pil_image = Image.open(buff)
+        pil_image.save(file_path, optimize=True, quality=95)
 
 
 def get_image(api_key, image_name):
