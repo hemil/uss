@@ -3,7 +3,7 @@ import errno
 
 from django.conf import settings
 from django.core.files.base import ContentFile
-from rest_framework.exceptions import PermissionDenied, ParseError, NotFound
+from rest_framework.exceptions import ParseError, NotFound
 
 
 def save_image(api_key, image_file):

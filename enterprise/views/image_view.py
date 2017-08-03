@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import logging
 
+from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
 
@@ -20,7 +21,7 @@ def image_handler(request):
         if image_name:
             # Get one particular image
             image_data, image_extension = get_image(api_key, image_name)
-            return get_response(image_data, content_type="image/{image_extension}".format(
+            return HttpResponse(image_data, content_type="image/{image_extension}".format(
                 image_extension=image_extension))
         else:
             # Get list of images
