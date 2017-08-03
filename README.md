@@ -15,11 +15,10 @@ Django project. hosted [here](https://jonny-quest.herokuapp.com/api/v1/ping/) an
 #### Assumptions:
 * not on prod (duh)
 * time constraints are not there (else everything will fail as a 3-4 mb image takes about 15 sec to create due to PIL compression and file write).
-* by update an image in Patch api, it will update the whole file to the one updated and not partial update of said image.
-* Generate keys also through api (which calls a management command) for simplicity for now.
+* PATCH API will update the whole file to the one updated and not partial update of said image.
+* Keys are also generated through api (which calls a management command) for simplicity.
 * Data storage format: files/<key>/<image_name_with_extension>/
-* and a file files/key_list.txt with valid keys (unencrypted for now), to validate keys and not search the whole directory all the time,
-as file operations have already made it very slow.
+* A file files/key_list.txt with valid keys (unencrypted for now so as not to increase the time taken), to validate keys and not search the whole directory all the time, as file operations have already made it very slow.
 
 
 #### APIs:
