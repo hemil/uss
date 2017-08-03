@@ -17,5 +17,9 @@ Django project. hosted [here](Not yet)
 * [x] GET list of key's images
 * [x] GET image (by name)
 * [x] POST image (creation)
-* [ ] PATCH image (update image by name)
-* [ ] DELETE image (delete image by name)
+* [x] PATCH image (update image by name)
+* [x] DELETE image (delete image by name)
+
+#### TODO:
+* [ ] image compression (PIL? or gzip? time offsets?)
+* [ ] Tests
