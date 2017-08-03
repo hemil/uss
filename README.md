@@ -12,6 +12,7 @@ Django project. hosted [here](Not yet)
 * Utility modules are in modules directory where all the action happens.
 
 #### APIs:
+(Very Slow due to file writes/reads and image sizes)
 * [x] POST Key Generation
 * [x] PUT Key regeneration (invalidate old key)
 * [x] GET list of key's images
@@ -21,5 +22,6 @@ Django project. hosted [here](Not yet)
 * [x] DELETE image (delete image by name)
 
 #### TODO:
-* [ ] image compression (PIL? or gzip? time offsets?)
+* [x] image compression (PIL? or gzip? time offsets?)
+Used PIL for now, makes it very slow. possibly shoot an event which some service can pick up asynchronously
 * [ ] Tests

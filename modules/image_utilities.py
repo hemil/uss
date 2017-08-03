@@ -1,6 +1,9 @@
 import os
 import errno
 
+from StringIO import StringIO
+
+from PIL import Image
 from django.conf import settings
 from django.core.files.base import ContentFile
 from rest_framework.exceptions import ParseError, NotFound
@@ -28,10 +31,20 @@ def save_image(api_key, image_file):
         if e.errno != errno.EEXIST:
             raise
 
-    file_content = ContentFile(image_file.read())
-    with open(file_path, "wb+") as f:
-        for chunk in file_content.chunks():
-            f.write(chunk)
+    # PIL compression only for jpeg and ong
+    # makes it slow
+    # possibly: save it normally and then shoot an event which will asynchronously compress it/upload it to cloud
+    buff = StringIO()
+    buff.write(image_file.read())
+    buff.seek(0)
+    pil_image = Image.open(buff)
+    pil_image.save(file_path, optimize=True, quality=95)
+
+    # direct save for other formats
+    # file_content = ContentFile(image_file.read())
+    # with open(file_path, "wb+") as f:
+    #     for chunk in file_content.chunks():
+    #         f.write(chunk)
 
 
 def get_image(api_key, image_name):
