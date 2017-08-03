@@ -1,5 +1,4 @@
-# uss
-A DoSelect Enterprise
+# USS - a doselect Enterprise
 
 [An answer to this quest](https://github.com/doselect/quests/blob/master/backend-developer/image-api.md)
 
