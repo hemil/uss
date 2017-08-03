@@ -49,6 +49,19 @@ def save_image(api_key, image_file):
         pil_image.save(file_path, optimize=True, quality=95)
 
 
+def patch_image(api_key, image_file):
+    """
+        Wrapper on save_image function so that it checks and raises a 404 if the image doesn't exist.
+    Args:
+        api_key: String
+        image_file: Django InMemoryUploadedFile from request
+    """
+    file_path = settings.FILE_DIR + "/" + api_key + "/" + image_file.name.replace(" ", "_")
+    if not os.path.isfile(file_path):
+        raise NotFound("No such image exists.")
+    save_image(api_key, image_file)
+
+
 def get_image(api_key, image_name):
     """
         Returns image to be returned

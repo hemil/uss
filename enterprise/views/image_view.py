@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
 
-from modules.image_utilities import save_image, get_image, get_image_list, delete_image
+from modules.image_utilities import save_image, get_image, get_image_list, patch_image, delete_image
 from modules.utilities import verify_key, get_response
 
 logger = logging.getLogger("enterprise")
@@ -28,7 +28,7 @@ def image_handler(request):
             data = get_image_list(api_key)
             return get_response(data)
 
-    elif request.method in ["POST", "PATCH"]:
+    elif request.method == "POST":
         # Assuming that it's not a partial update (though it should be, since it's PATCH).
         # As I don't think that partial updates of images are possible (tried it with a couple of local images)
         image_file = request.FILES.get("image_file")
@@ -36,6 +36,14 @@ def image_handler(request):
             raise ValidationError("Image file needs to be sent")
         save_image(api_key, image_file)
         message = "Created file: {image_file}".format(image_file=image_file.name)
+        return get_response(None, message=message, status_code=201)
+
+    elif request.method == "PATCH":
+        image_file = request.FILES.get("image_file")
+        if not image_file:
+            raise ValidationError("Image file needs to be sent")
+        patch_image(api_key, image_file)
+        message = "Updated file: {image_file}".format(image_file=image_file.name)
         return get_response(None, message=message, status_code=201)
 
     elif request.method == "DELETE":
