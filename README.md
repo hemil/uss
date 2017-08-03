@@ -5,7 +5,6 @@
 Django project. hosted [here](https://jonny-quest.herokuapp.com/api/v1/ping/) and [Postman Collection](https://www.getpostman.com/collections/c32066d8845bd2442dd2)
 
 #### Description:
-* **Heroku dynos sleep. So on each use, the whole cycle of usage will have to be done again**
 * All images are hosted on the disk file in the files folder, as db use isn't allowed. As are the keys (insecure, I know) to get quicker access instead of searching.
 * Images are stored in files/<key>/<image_name_with_extension>/ format to make it easier to fetch and create.
 * There are two management commands to generate and regenerate keys which are called from the view.
