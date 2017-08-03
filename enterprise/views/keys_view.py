@@ -7,8 +7,7 @@ from django.core.management import call_command
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ParseError
 
-# from modules.image_utilities import verify_key, save_file, get_image, get_image_list
-from modules.image_utilities import verify_key
+from modules.utilities import verify_key
 
 logger = logging.getLogger("enterprise")
 

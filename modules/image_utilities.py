@@ -6,32 +6,7 @@ from django.core.files.base import ContentFile
 from rest_framework.exceptions import PermissionDenied, ParseError, NotFound
 
 
-def verify_key(api_key):
-    """
-        Verifies if the api key is valid
-        Ideally this would just do a search in the DB table with index, but since DB use is prohibited,
-        using a file in the file system.
-    Args:
-        api_key: String.
-
-    Returns:
-
-    """
-    if not api_key:
-        raise PermissionDenied()
-    key_file = settings.FILE_DIR + "/key_list.txt"
-    try:
-        with open(key_file, "r") as f:
-            valid_keys = f.readlines()
-            for valid_key in valid_keys:
-                if valid_key.rstrip() == api_key.rstrip():
-                    return
-    except IOError:
-        raise ParseError("No Keys exist. Please generate a key first.")
-    raise PermissionDenied("API Key Invalid")
-
-
-def save_file(api_key, image_file):
+def save_image(api_key, image_file):
     # TODO compress files
     """
         Saves image file to the disk as DB use is forbidden. Creates API key folder if it doesn't exist.
@@ -98,3 +73,16 @@ def get_image_list(api_key):
             if file_name.lower().endswith(('.jpg', '.jpeg', '.png')):
                 files.append(file_name)
     return files
+
+
+def delete_image(api_key, image_name):
+    """
+        Deletes and image file
+    Args:
+        api_key: string.
+        image_name: string
+    """
+    file_path = settings.FILE_DIR + "/" + api_key + "/" + image_name
+    if not os.path.isfile(file_path):
+        raise NotFound("No such image exists.")
+    os.remove(file_path)
