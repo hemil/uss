@@ -14,6 +14,7 @@ Django project. hosted [here](https://jonny-quest.herokuapp.com/api/v1/ping/) an
 #### Assumptions:
 * not on prod (duh)
 * time constraints are not there (else everything will fail as a 3-4 mb image takes about 15 sec to create due to PIL compression and file write).
+* So please use images which are smaller so that it doesn't run afoul heroku's 25-30 (not sure) second timeout.
 * PATCH API will update the whole file to the one updated and not partial update of said image.
 * Keys are also generated through api (which calls a management command) for simplicity.
 * Data storage format: files/<key>/<image_name_with_extension>/
