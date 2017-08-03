@@ -12,10 +12,10 @@ Django project. hosted [here](Not yet)
 * Utility modules are in modules directory where all the action happens.
 
 #### APIs:
-* POST Key Generation
-* PUT Key regeneration (invalidate old key)
-* GET list of key's images
-* GET image (by name)
-* POST image (creation)
-* PATCH image (update image by name)
-* DELETE image (delete image by name)
+* [x] POST Key Generation
+* [x] PUT Key regeneration (invalidate old key)
+* [x] GET list of key's images
+* [x] GET image (by name)
+* [x] POST image (creation)
+* [ ] PATCH image (update image by name)
+* [ ] DELETE image (delete image by name)
